@@ -41,7 +41,7 @@ export default function SignInPage() {
         <div className="w-full h-full flex justify-center items-center bg-[#252525]">
             <div className="w-full max-w-120 flex flex-col gap-6 p-6 rounded-2xl bg-[#383838]">
                 <div className="flex flex-col gap-2 items-center">
-                    <p className="text-transparent text-[40px] font-black bg-clip-text bg-linear-to-br from-[#D9D9D9] to-[#737373]">RUGRAM</p>
+                    <Link href="/"><p className="text-transparent text-[40px] font-black bg-clip-text bg-linear-to-br from-[#D9D9D9] to-[#737373]">RUGRAM</p></Link>
                     <p className="text-[#A8A8A8] text-2xl font-bold">ВХОД</p>
                 </div>
                 <div className="flex flex-col gap-5 items-center">

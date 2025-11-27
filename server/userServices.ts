@@ -3,7 +3,8 @@ import { auth } from "./auth/auth";
 import { UserSchema } from "./lib/zod-schemas";
 import { user } from "./db/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { and, eq, ilike, ne, or } from "drizzle-orm";
+import z from "zod";
 
 
 export const userServices = new Elysia({
@@ -34,4 +35,16 @@ export const userServices = new Elysia({
     await db.update(user).set(body).where(eq(user.id, session.user.id))
 }, {
     body: UserSchema.partial()
+})
+.get('/:search', async ({ params, session }) => {
+    const search = `%${params.search}%`
+    return await db.query.user.findMany({
+        where: and(
+            or(
+            ilike(user.name, search),
+            ilike(user.email, search) 
+            ),
+            ne(user.id, session!.user.id)
+        )
+    })
 })

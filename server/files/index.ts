@@ -5,7 +5,13 @@ import { files } from '../db/schema'
 import { redis } from 'bun'
 import { eq } from 'drizzle-orm'
 
-const s3 = new Bun.S3Client()
+export const s3 = new Bun.S3Client({
+    endpoint: process.env.S3_ENDPOINT!,
+    bucket: process.env.S3_BUCKET!,
+    region: process.env.S3_REGION!,
+    accessKeyId: process.env.S3_ACCESS_KEY!,
+    secretAccessKey: process.env.S3_SECRET_KEY!,
+})
 
 export const maxFileSize = 1024 * 1024 * 5
 
