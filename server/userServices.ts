@@ -5,6 +5,7 @@ import { user } from "./db/schema";
 import { db } from "./db";
 import { and, eq, ilike, ne, or } from "drizzle-orm";
 import z from "zod";
+import { redis } from "bun";
 
 
 export const userServices = new Elysia({
@@ -38,6 +39,7 @@ export const userServices = new Elysia({
 })
 .get('/:search', async ({ params, session }) => {
     const search = `%${params.search}%`
+
     return await db.query.user.findMany({
         where: and(
             or(

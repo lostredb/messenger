@@ -10,7 +10,7 @@ export const messages = pg.pgTable('messages', {
         .text('message')
         .notNull(),
     userId: pg
-        .varchar('id', {length: 255})
+        .varchar('user_id', {length: 255})
         .notNull()
         .references(() => user.id),
     chatId: pg

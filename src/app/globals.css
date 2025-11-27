@@ -82,6 +82,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  /* Hide scroll bar */
+  * ::-webkit-scrollbar{
+    width: 0;
+    height: 0
+  }
+  
+  * {
+    scrollbar-width: 0;
+    -ms-overflow-style: none
+  }
+
   body {
     @apply bg-background text-foreground;
   }

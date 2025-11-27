@@ -1,8 +1,9 @@
 import Elysia from "elysia";
 import { db } from "./db";
 import { and, eq, or } from "drizzle-orm";
-import { chats, messages } from "./db/schema";
+import { chats, messages, session } from "./db/schema";
 import { userServices } from "./userServices";
+import z from "zod";
 
 
 export const messageServices = new Elysia({
@@ -54,4 +55,18 @@ export const messageServices = new Elysia({
         }
     }
     await db.insert(chats).values({userId: session!.user.id, interlocutorId: params.id})
+})
+.get('/:id', async ({params}) => {
+    return await db.query.messages.findMany({
+        where: eq(messages.chatId, params.id)
+    })
+})
+
+.post('/:id', async ({body, params, session}) => {
+    console.log('Это body', body)
+    console.log('Это params', params)
+    console.log('Это session', session)
+    await db.insert(messages).values({message: body.toString(), chatId: params.id, userId: session!.session.userId})
+}, {
+    body: z.string()
 })
